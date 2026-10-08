@@ -3,6 +3,8 @@
 An n8n automation that captures real estate leads, cleans the data, prevents
 duplicates, and alerts the agent within seconds.
 
+![Workflow screenshot](image_2026-10-08_060909580.png)
+
 ## Problem
 Real estate agents receive leads from multiple sources (website forms, ads,
 WhatsApp). The data is often messy, the same person contacts them several
