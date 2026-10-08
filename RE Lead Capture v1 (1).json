@@ -1,0 +1,750 @@
+{
+  "name": "RE Lead Capture v1",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "re-lead",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        -160
+      ],
+      "id": "54bf2426-c67a-4464-b9be-f044845a4944",
+      "name": "Webhook",
+      "webhookId": "12726dfc-6b25-4081-9eed-e11493c711a2"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "k58qStm3cWiVmb9M",
+          "mode": "list",
+          "cachedResultName": "leads",
+          "cachedResultUrl": "/projects/ORYZTvi10lPEodqg/datatables/k58qStm3cWiVmb9M"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "phone",
+              "keyValue": "={{ $json.lead.phone }}"
+            }
+          ]
+        },
+        "limit": 1
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        896,
+        -256
+      ],
+      "id": "21806858-42a9-48ef-8d4e-dff2ac78a3a4",
+      "name": "Get row(s)",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "value": "k58qStm3cWiVmb9M",
+          "mode": "list",
+          "cachedResultName": "leads",
+          "cachedResultUrl": "/projects/ORYZTvi10lPEodqg/datatables/k58qStm3cWiVmb9M"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyValue": "={{ $('Get row(s)').item.json.id }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "contact_count": "={{ $json.contact_count + 1 }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "full_name",
+              "displayName": "full_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "phone",
+              "displayName": "phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "intent",
+              "displayName": "intent",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "budget_max",
+              "displayName": "budget_max",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "preferred_area",
+              "displayName": "preferred_area",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "budget_min",
+              "displayName": "budget_min",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "property_type",
+              "displayName": "property_type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "source",
+              "displayName": "source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "message",
+              "displayName": "message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "contact_count",
+              "displayName": "contact_count",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        1344,
+        -352
+      ],
+      "id": "eb95d06c-040c-4cda-9651-b88811299366",
+      "name": "Update row(s)"
+    },
+    {
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "value": "k58qStm3cWiVmb9M",
+          "mode": "list",
+          "cachedResultName": "leads",
+          "cachedResultUrl": "/projects/ORYZTvi10lPEodqg/datatables/k58qStm3cWiVmb9M"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "email": "={{ $('Normalize').item.json.lead.email }}",
+            "phone": "={{ $('Normalize').item.json.lead.phone }}",
+            "intent": "={{ $('Normalize').item.json.lead.intent }}",
+            "budget_min": "={{ $('Normalize').item.json.lead.budget_min }}",
+            "budget_max": "={{ $('Normalize').item.json.lead.budget_max }}",
+            "preferred_area": "={{ $('Normalize').item.json.lead.preferred_area }}",
+            "property_type": "={{ $('Normalize').item.json.lead.property_type }}",
+            "source": "={{ $('Normalize').item.json.lead.source }}",
+            "message": "={{ $('Normalize').item.json.lead.message }}",
+            "status": "={{ $('Normalize').item.json.lead.status }}",
+            "full_name": "={{ $('Normalize').item.json.lead.full_name }}",
+            "contact_count": "={{ $('Normalize').item.json.lead.contact_count }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "full_name",
+              "displayName": "full_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "phone",
+              "displayName": "phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "intent",
+              "displayName": "intent",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "budget_min",
+              "displayName": "budget_min",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "budget_max",
+              "displayName": "budget_max",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "preferred_area",
+              "displayName": "preferred_area",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "property_type",
+              "displayName": "property_type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "source",
+              "displayName": "source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "message",
+              "displayName": "message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "contact_count",
+              "displayName": "contact_count",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        1344,
+        -160
+      ],
+      "id": "7f64c57e-f380-4c6f-8fc2-3da2d33c0c43",
+      "name": "Insert row"
+    },
+    {
+      "parameters": {
+        "jsCode": "const lead = $('Normalize').first().json.lead;\nconst existing = $('Get row(s)').first().json;\n\nconst isDuplicate = !!existing.id;\nconst count = isDuplicate ? (Number(existing.contact_count) || 0) + 1 : 1;\n\nconst waLink = \"https://wa.me/\" + lead.phone.replace(\"+\", \"\");\n\nconst subject = isDuplicate\n  ? `Returning Lead: ${lead.full_name} (${count}x contact)`\n  : `New Lead: ${lead.full_name} - ${lead.intent.toUpperCase()}`;\n\nconst lines = [\n  isDuplicate\n    ? `Ye lead pehle bhi contact kar chuka hai (${count} dafa).`\n    : \"Naya lead aaya hai.\",\n  \"\",\n  `Naam: ${lead.full_name}`,\n  `Phone: ${lead.phone}`,\n  `Email: ${lead.email || \"-\"}`,\n  `Intent: ${lead.intent}`,\n  `Area: ${lead.preferred_area || \"-\"}`,\n  `Property: ${lead.property_type || \"-\"}`,\n  `Budget: ${lead.budget_min ?? \"-\"} se ${lead.budget_max ?? \"-\"}`,\n  `Source: ${lead.source}`,\n  `Message: ${lead.message || \"-\"}`,\n  \"\",\n  `WhatsApp: ${waLink}`\n];\n\nreturn [{\n  json: {\n    isDuplicate,\n    contact_count: count,\n    subject,\n    text: lines.join(\"\\n\")\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1568,
+        -256
+      ],
+      "id": "e00e3e93-2136-40b9-8ee4-9133030e958b",
+      "name": "Build Alert"
+    },
+    {
+      "parameters": {
+        "jsCode": "function normalizePhone(raw) {\n  let digits = String(raw || \"\").replace(/\\D/g, \"\");\n  if (digits.length === 11 && digits.startsWith(\"03\")) {\n    digits = \"92\" + digits.slice(1);\n  } else if (digits.length === 10 && digits.startsWith(\"3\")) {\n    digits = \"92\" + digits;\n  }\n  return \"+\" + digits;\n}\n\nfunction cleanText(v) {\n  return String(v ?? \"\").trim();\n}\n\nfunction toNumber(v) {\n  if (v === null || v === undefined || v === \"\") return null;\n  return Number(v);\n}\n\nfunction titleName(name) {\n  return cleanText(name)\n    .split(/\\s+/)\n    .map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())\n    .join(\" \");\n}\n\nreturn $input.all().map(item => {\n  const b = item.json.lead || {};\n\n  return {\n    json: {\n      lead: {\n        full_name: titleName(b.full_name),\n        phone: normalizePhone(b.phone),\n        email: cleanText(b.email).toLowerCase(),\n        intent: cleanText(b.intent).toLowerCase(),\n        budget_min: toNumber(b.budget_min),\n        budget_max: toNumber(b.budget_max),\n        preferred_area: cleanText(b.preferred_area),\n        property_type: cleanText(b.property_type).toLowerCase(),\n        source: cleanText(b.source) || \"unknown\",\n        message: cleanText(b.message),\n        status: \"new\",\n        contact_count: 1\n      }\n    }\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        672,
+        -256
+      ],
+      "id": "01919eb3-43f9-4b81-ad21-fc7ce363d2fb",
+      "name": "Normalize"
+    },
+    {
+      "parameters": {
+        "sendTo": "YOUR_EMAIL@example.com",
+        "subject": "={{ $json.subject }}",
+        "message": "={{ $json.text }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1792,
+        -256
+      ],
+      "id": "ed881284-59f8-4a58-882c-206404df62e7",
+      "name": "Send a message",
+      "webhookId": "c926b2e6-676b-486b-992f-9fbd8183095e",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "9H0Sa8dDkzK3V7wC",
+          "name": "Gmail account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        -576
+      ],
+      "id": "f5eeec2f-f35b-4832-9345-0666ec8dca69",
+      "name": "Error Trigger"
+    },
+    {
+      "parameters": {
+        "sendTo": "shahzaibm.aslam.68@gmail.com",
+        "subject": "=Workflow FAILED: {{ $json.workflow.name }}",
+        "message": "={{ $json.execution.error.message }}{{ $json.execution.url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        224,
+        -576
+      ],
+      "id": "4de2b289-54db-4d5c-81a8-ec4da8c00804",
+      "name": "Send a message1",
+      "webhookId": "178dbac4-71bf-4b15-9423-073a01f90edf",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "9H0Sa8dDkzK3V7wC",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const b = $json.body || {};\nconst errors = [];\n\n// required fields\nif (!b.full_name || b.full_name.trim().length < 2) errors.push(\"full_name required\");\nif (!b.phone) errors.push(\"phone required\");\nif (![\"buy\", \"rent\", \"sell\"].includes(b.intent)) errors.push(\"intent must be buy/rent/sell\");\n\n// phone check (Pakistan style)\nconst digits = (b.phone || \"\").replace(/\\D/g, \"\");\nconst phoneOk = /^(92|0)?3\\d{9}$/.test(digits);\nif (b.phone && !phoneOk) errors.push(\"phone format invalid\");\n\n// email (optional but agar diya to sahi ho)\nif (b.email && !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(b.email)) errors.push(\"email invalid\");\n\n// budget\nif (b.budget_min && b.budget_max && Number(b.budget_min) > Number(b.budget_max)) {\n  errors.push(\"budget_min cannot exceed budget_max\");\n}\n\nreturn { json: { valid: errors.length === 0, errors, lead: b } };"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        224,
+        -160
+      ],
+      "id": "bf9010a0-d938-42a9-aee3-b2ccb1aeafe3",
+      "name": "Validate Lead"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "133f1caa-3f07-472d-b622-31e6f10b3fbd",
+              "leftValue": "={{ $json.valid }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        448,
+        -160
+      ],
+      "id": "29aa97e5-23bf-46a5-9d9b-8306fc4d2859",
+      "name": "Is Valid?"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "8049b1fa-4763-4378-b608-e7932d398045",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "number",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1120,
+        -256
+      ],
+      "id": "9f6ff59c-8fc5-4a2e-a8df-8d664fbc94e2",
+      "name": "Is Duplicate?"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={ \"success\": false, \"errors\": {{ JSON.stringify($json.errors) }} }",
+        "options": {
+          "responseCode": 400
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        672,
+        -64
+      ],
+      "id": "d2af7a8a-1b12-4c4b-8236-a48852ec88d7",
+      "name": "Respond 400"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { \"success\": true, \"result\": $('Build Alert').first().json.isDuplicate ? \"duplicate_updated\" : \"created\", \"alert_sent\": true } }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        2016,
+        -352
+      ],
+      "id": "40ae917e-3a60-4d60-bcef-ce3f7b2f9d8b",
+      "name": "Respond 200"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { \"success\": true, \"result\": $('Build Alert').first().json.isDuplicate ? \"duplicate_updated\" : \"created\", \"alert_sent\": false, \"note\": \"Lead saved, lekin agent alert fail hua\" } }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        2016,
+        -160
+      ],
+      "id": "4cb6cb5f-4036-41f7-b175-c4c6e488d72f",
+      "name": "Respond "
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Validate Lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s)": {
+      "main": [
+        [
+          {
+            "node": "Is Duplicate?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update row(s)": {
+      "main": [
+        [
+          {
+            "node": "Build Alert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert row": {
+      "main": [
+        [
+          {
+            "node": "Build Alert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Alert": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize": {
+      "main": [
+        [
+          {
+            "node": "Get row(s)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Respond 200",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond ",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Send a message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Lead": {
+      "main": [
+        [
+          {
+            "node": "Is Valid?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Valid?": {
+      "main": [
+        [
+          {
+            "node": "Normalize",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond 400",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Duplicate?": {
+      "main": [
+        [
+          {
+            "node": "Update row(s)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Insert row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": true
+  },
+  "versionId": "b91308a0-7ab0-461e-ab75-410fcf271e04",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "3b6bef6219467ddb66459e4ee48fd669178ebac2fa451a378051a1e6b47ad880"
+  },
+  "nodeGroups": [],
+  "id": "Oqob2pCn8e1XQRPK",
+  "tags": []
+}
